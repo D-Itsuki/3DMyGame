@@ -12,8 +12,10 @@ public class FPSController : MonoBehaviour
     public float m_jumpPower = 5f;
     /// <summary>接地判定の際、中心 (Pivot) からどれくらいの距離を「接地している」と判定するかの長さ</summary>
     [SerializeField] float m_isGroundedLength = 1.1f;
+    [SerializeField] int health;
 
     public List<ItemBase> items = new List<ItemBase>();
+    public Coroutine m_coroutine;
     float timer = 0;
     CapsuleCollider collider;
     CameraController1 camera;
@@ -133,5 +135,18 @@ public class FPSController : MonoBehaviour
 
         m_movingSpeed /= 2;
         Debug.Log("Speed up end");
+    }
+
+    public void Damage()
+    {
+        health -= 1;
+
+        //死んだらGAMEOVER用のオブジェクト生成
+        if (health < 1)
+        {
+            Debug.Log("GAME OVER");
+            //Destroy(this);
+            //Instantiate();
+        }
     }
 }

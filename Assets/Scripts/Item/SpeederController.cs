@@ -10,7 +10,7 @@ class SpeederController : ItemBase
     public override void Use()
     {
         Debug.Log("Item Use");
-        a.speedUp();
+        a.m_coroutine = StartCoroutine(a.speedUp());
         a.items.Remove(this);
     }
 
