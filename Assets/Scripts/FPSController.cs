@@ -5,23 +5,30 @@ using UnityEngine;
 public class FPSController : MonoBehaviour
 {
     /// <summary>動く速さ</summary>
-    [SerializeField] float m_movingSpeed;
+    public float m_movingSpeed;
     /// <summary>ターンの速さ</summary>
-    [SerializeField] float m_turnSpeed = 3f;
+    public float m_turnSpeed = 3f;
     /// <summary>ジャンプ力</summary>
-    [SerializeField] float m_jumpPower = 5f;
+    public float m_jumpPower = 5f;
     /// <summary>接地判定の際、中心 (Pivot) からどれくらいの距離を「接地している」と判定するかの長さ</summary>
     [SerializeField] float m_isGroundedLength = 1.1f;
+
+    public List<ItemBase> items = new List<ItemBase>();
+    float timer = 0;
+    CapsuleCollider collider;
+    CameraController1 camera;
 
     Animator m_anim = null;
     Rigidbody m_rb = null;
 
     void Start()
     {
+        camera = FindObjectOfType<CameraController1>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         m_rb = GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
+        collider = GetComponent<CapsuleCollider>();
     }
 
     void Update()
@@ -69,6 +76,27 @@ public class FPSController : MonoBehaviour
         {
             m_movingSpeed /= 2f;
         }
+
+        //アイテム使用
+        if (Input.GetButtonDown("Use"))
+        {
+            items[0].Use();
+        }
+
+        //しゃがみ
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Debug.Log("しゃがみ");
+            collider.height = 0.7f;
+            collider.center = new Vector3(0, 0.45f, 0);
+            camera.CrouchCamera();
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            collider.height = 1.7f;
+            collider.center = new Vector3(0, 0.8f, 0);
+            camera.CameraStand();
+        }
     }
 
     /// <summary>
@@ -94,5 +122,16 @@ public class FPSController : MonoBehaviour
         Debug.DrawLine(start, end); // 動作確認用に Scene ウィンドウ上で線を表示する
         bool isGrounded = Physics.Linecast(start, end); // 引いたラインに何かがぶつかっていたら true とする
         return isGrounded;
+    }
+
+    public IEnumerator speedUp()
+    {
+        Debug.Log("Speed up");
+        m_movingSpeed *= 2;
+        
+        yield return new WaitForSeconds(10);
+
+        m_movingSpeed /= 2;
+        Debug.Log("Speed up end");
     }
 }

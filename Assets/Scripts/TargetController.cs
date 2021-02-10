@@ -6,23 +6,23 @@ public class TargetController : MonoBehaviour
 {
     GameManager GameManager;
     public GameObject sound;
-    int clearCoins;
+    //int clearCoins;
 
     // Start is called before the first frame update
     void Start()
     {
-        clearCoins = GameObject.FindGameObjectsWithTag("coin").Length - 1;
+        //clearCoins = GameObject.FindGameObjectsWithTag("coin").Length - 1;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        CoinGet();
-        if (GameManager.targets > clearCoins)
+        if (other.tag == "Player")
         {
-            Clear();
+            GameManager.targets += 1;
+            Debug.Log(GameManager.targets);
+            Instantiate(sound, this.transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
         }
-        Instantiate(sound, this.transform.position, Quaternion.identity);
-        Destroy(this.gameObject);
     }
 
     // Update is called once per frame
@@ -30,15 +30,10 @@ public class TargetController : MonoBehaviour
     {
         transform.Rotate(new Vector3(0, 0, 1.0f));
     }
-    public void CoinGet()
-    {
-        GameManager.targets += 1;
-        Debug.Log(GameManager.targets);
-    }
 
     public void Clear()
     {
-        Debug.Log("clear");
+        GameManager.GameClear();
     }
 
 }
