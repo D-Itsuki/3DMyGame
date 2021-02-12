@@ -89,15 +89,17 @@ public class FPSController : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             Debug.Log("しゃがみ");
+            m_movingSpeed /= 2;
             collider.height = 0.7f;
-            collider.center = new Vector3(0, 0.45f, 0);
+            collider.center = new Vector3(0, 1.0f, 0);
             camera.CrouchCamera();
         }
         if (Input.GetButtonUp("Fire1"))
         {
+            Debug.Log("立ち");
+            m_movingSpeed *= 2;
             collider.height = 1.7f;
             collider.center = new Vector3(0, 0.8f, 0);
-            camera.CameraStand();
         }
     }
 
