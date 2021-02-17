@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4476866595530072789}
   - component: {fileID: 4003359190691456669}
+  - component: {fileID: 4550290007596506122}
   m_Layer: 0
   m_Name: CoinSound
   m_TagString: Untagged
@@ -127,3 +128,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4550290007596506122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498098083388270613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33148dfdac9ec3648bea5737e7e6609f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinGet: {fileID: 0}

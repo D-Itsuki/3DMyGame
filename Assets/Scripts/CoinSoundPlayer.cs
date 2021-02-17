@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class CoinSoundPlayer : MonoBehaviour
 {
-    AudioSource coin;
-    public AudioClip coinGet;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        coin = GetComponent<AudioSource>();
-    }
-
-    // Update is called once per frame
+    float timer = 0;
     void Update()
     {
-        coin.PlayOneShot(coinGet);
+        timer += Time.deltaTime;
+        //Debug.Log(timer);
+        if (timer > 1f)
+        {
+            Destroy(this.gameObject);
+            //Debug.Log("a");
+        }
     }
 }
