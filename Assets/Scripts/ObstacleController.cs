@@ -40,4 +40,9 @@ public class ObstacleController : MonoBehaviour
             a.Damage();
         }
     }
+
+   public void ClearDestroy()
+    {
+        Destroy(this);
+    }
 }

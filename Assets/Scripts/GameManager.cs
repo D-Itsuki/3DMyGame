@@ -7,11 +7,19 @@ public class GameManager : MonoBehaviour
     public static int targets = 0;
     int clearCoins;
     bool clear = false;
+    [SerializeField] GameObject player = null;
+    [SerializeField] GameObject mainCamera = null;
+    [SerializeField] GameObject clearTimeLine = null;
+    [SerializeField] GameObject clearCamera = null;
+    GameObject[] obstacles = null;
 
     // Start is called before the first frame update
     void Start()
     {
         clearCoins = GameObject.FindGameObjectsWithTag("coin").Length;
+        obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        //player = GameObject.FindGameObjectWithTag("Player");
+        //mainCamera = GameObject.FindGameObjectWithTag("PlayerEye");
     }
 
     // Update is called once per frame
@@ -28,5 +36,13 @@ public class GameManager : MonoBehaviour
     public void GameClear()
     {
         Debug.Log("GAME CLEAR!");
+        foreach (var item in obstacles)
+        {
+            Destroy(item);
+        }
+        player.SetActive(false);
+        mainCamera.SetActive(false);
+        clearCamera.SetActive(true);
+        clearTimeLine.SetActive(true);
     }
 }
