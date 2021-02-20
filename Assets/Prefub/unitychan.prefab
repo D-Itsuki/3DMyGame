@@ -2649,6 +2649,8 @@ MonoBehaviour:
   m_turnSpeed: 3
   m_jumpPower: 5
   m_isGroundedLength: 0.1
+  health: 3
+  items: []
 --- !u!1 &8790124776213491826
 GameObject:
   m_ObjectHideFlags: 0

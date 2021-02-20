@@ -1,25 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static int targets = 0;
     int clearCoins;
-    bool clear = false;
     [SerializeField] GameObject player = null;
     [SerializeField] GameObject mainCamera = null;
     [SerializeField] GameObject clearTimeLine = null;
     [SerializeField] GameObject clearCamera = null;
     GameObject[] obstacles = null;
+    LoadSceneManager loader;
+    public static bool m_isGameOver;
 
     // Start is called before the first frame update
     void Start()
     {
         clearCoins = GameObject.FindGameObjectsWithTag("coin").Length;
         obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        //player = GameObject.FindGameObjectWithTag("Player");
-        //mainCamera = GameObject.FindGameObjectWithTag("PlayerEye");
+        loader = GetComponent<LoadSceneManager>();
+        m_isGameOver = false;
     }
 
     // Update is called once per frame
@@ -27,9 +30,13 @@ public class GameManager : MonoBehaviour
     {
         if (targets == clearCoins)
         {
-            clear = true;
-            GameClear();
-            targets++;
+            targets = 0;
+            loader.Load(1);
+        }
+        if (m_isGameOver)
+        {
+            m_isGameOver = false;
+            loader.Load(2);
         }
     }
 

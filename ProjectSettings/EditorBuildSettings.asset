@@ -11,4 +11,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Stage1.unity
     guid: 9cbb6af187280324589ba22d2d0b93b6
+  - enabled: 1
+    path: Assets/Scenes/Stage2StartMovie.unity
+    guid: fec2d44f8bca8624a942191f0b313c5c
+  - enabled: 1
+    path: Assets/Scenes/Stage2.unity
+    guid: e58179ace4450ac48a063ba45e72cc66
+  - enabled: 1
+    path: Assets/Scenes/ClearScene.unity
+    guid: 63f6f61946503024e9c8bd0026b49c82
+  - enabled: 1
+    path: Assets/Scenes/GameOverScene.unity
+    guid: ccb974ffd5761a44e9b8ca7aa91113f5
+  - enabled: 1
+    path: Assets/Scenes/Test.unity
+    guid: b98c04b073c846a4ba34c8831823c373
   m_configObjects: {}

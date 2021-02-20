@@ -19,7 +19,7 @@ public class ObstacleController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (lookAt)
+        if (lookAt && Vector3.Distance(transform.position, lookTarget.transform.position) < 20f)
         {
             this.transform.LookAt(lookTarget.transform);
         }
@@ -41,8 +41,4 @@ public class ObstacleController : MonoBehaviour
         }
     }
 
-   public void ClearDestroy()
-    {
-        Destroy(this);
-    }
 }

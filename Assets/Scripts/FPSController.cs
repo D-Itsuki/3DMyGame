@@ -16,7 +16,6 @@ public class FPSController : MonoBehaviour
 
     public List<ItemBase> items = new List<ItemBase>();
     public Coroutine m_coroutine;
-    float timer = 0;
     CapsuleCollider collider;
     CameraController1 camera;
 
@@ -143,12 +142,11 @@ public class FPSController : MonoBehaviour
     {
         health -= 1;
 
-        //死んだらGAMEOVER用のオブジェクト生成
+        //死んだらGAMEOVER用のシーンに遷移
         if (health < 1)
         {
             Debug.Log("GAME OVER");
-            //Destroy(this);
-            //Instantiate();
+            GameManager.m_isGameOver = true;
         }
     }
 }
