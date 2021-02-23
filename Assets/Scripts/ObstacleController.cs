@@ -37,7 +37,7 @@ public class ObstacleController : MonoBehaviour
         if (collision.collider.tag == "Player")
         {
             a = collision.gameObject.GetComponent<FPSController>();
-            a.Damage();
+            a.Damage(this.tag);
         }
     }
 

@@ -138,9 +138,17 @@ public class FPSController : MonoBehaviour
         Debug.Log("Speed up end");
     }
 
-    public void Damage()
+    public void Damage(string tag )
     {
-        health -= 1;
+        if (tag == "Obstacle")
+        {
+            health -= 1;
+        }
+        else if (tag == "Boss")
+        {
+            health = 0;
+        }
+        
 
         //死んだらGAMEOVER用のシーンに遷移
         if (health < 1)
