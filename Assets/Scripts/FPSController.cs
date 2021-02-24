@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FPSController : MonoBehaviour
 {
@@ -12,23 +13,30 @@ public class FPSController : MonoBehaviour
     public float m_jumpPower = 5f;
     /// <summary>接地判定の際、中心 (Pivot) からどれくらいの距離を「接地している」と判定するかの長さ</summary>
     [SerializeField] float m_isGroundedLength = 1.1f;
-    [SerializeField] int health;
+
+    [SerializeField] int nowHealth;
+    int maxHealth;
 
     public List<ItemBase> items = new List<ItemBase>();
+
+    [SerializeField] Slider hpSlider;
+
     public Coroutine m_coroutine;
     CapsuleCollider collider;
     CameraController1 camera;
 
-    Animator m_anim = null;
+    bool isCrouch = false;
+
     Rigidbody m_rb = null;
 
     void Start()
     {
+        maxHealth = nowHealth;
+        hpSlider.value = maxHealth;
         camera = FindObjectOfType<CameraController1>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         m_rb = GetComponent<Rigidbody>();
-        m_anim = GetComponent<Animator>();
         collider = GetComponent<CapsuleCollider>();
     }
 
@@ -85,20 +93,23 @@ public class FPSController : MonoBehaviour
         }
 
         //しゃがみ
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && IsGrounded())
         {
             Debug.Log("しゃがみ");
+            isCrouch = true;
             m_movingSpeed /= 2;
             collider.height = 0.7f;
-            collider.center = new Vector3(0, 1.0f, 0);
+            collider.center = new Vector3(0, 0.45f, 0);
             camera.CrouchCamera();
         }
-        if (Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("Fire1") && IsGrounded() && isCrouch)
         {
             Debug.Log("立ち");
+            isCrouch = false;
             m_movingSpeed *= 2;
-            collider.height = 1.7f;
             collider.center = new Vector3(0, 0.8f, 0);
+            collider.height = 1.7f;
+            camera.StandUp();
         }
     }
 
@@ -120,7 +131,7 @@ public class FPSController : MonoBehaviour
     bool IsGrounded()
     {
         // Physics.Linecast() を使って足元から線を張り、そこに何かが衝突していたら true とする
-        Vector3 start = this.transform.position;   // start: オブジェクトの中心
+        Vector3 start = new Vector3(this.transform.position.x, this.transform.position.y + 0.5f, this.transform.position.z);   // start: オブジェクトの中心
         Vector3 end = start + Vector3.down * m_isGroundedLength;  // end: start から真下の地点
         Debug.DrawLine(start, end); // 動作確認用に Scene ウィンドウ上で線を表示する
         bool isGrounded = Physics.Linecast(start, end); // 引いたラインに何かがぶつかっていたら true とする
@@ -142,18 +153,21 @@ public class FPSController : MonoBehaviour
     {
         if (tag == "Obstacle")
         {
-            health -= 1;
+            nowHealth -= 1;
+            hpSlider.value = (float)nowHealth / maxHealth;
+            Debug.Log(nowHealth);
         }
         else if (tag == "Boss")
         {
-            health = 0;
+            nowHealth = 0;
         }
         
 
         //死んだらGAMEOVER用のシーンに遷移
-        if (health < 1)
+        if (nowHealth < 1)
         {
             Debug.Log("GAME OVER");
+            hpSlider.value = (float)nowHealth / maxHealth;
             GameManager.m_isGameOver = true;
         }
     }

@@ -18,7 +18,7 @@ public class TargetController : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            GameManager.targets += 1;
+            GameManager.targets -= 1;
             Debug.Log(GameManager.targets);
             Instantiate(sound, this.transform.position, Quaternion.identity);
             Destroy(this.gameObject);
