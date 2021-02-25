@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI PlayGuid = null;
+    float timer = 0;
+    float a;
     public static int targets = 0;
     int remaningCoin;
     [SerializeField] GameObject player = null;
@@ -30,6 +33,21 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
+        PlayGuid.color = new Color(PlayGuid.color.r, PlayGuid.color.g, PlayGuid.color.b, a);
+        if (!Input.anyKey)
+        {
+            if (timer > 15)
+            {
+                a += 0.1f;
+            }
+        }
+        else
+        {
+            a = 0;
+            timer = 0;
+        }
+
         if (targets == 0)
         {
             targets = 0;
