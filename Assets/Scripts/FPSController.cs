@@ -163,7 +163,7 @@ public class FPSController : MonoBehaviour
         }
         
 
-        //死んだらGAMEOVER用のシーンに遷移
+        //GAMEOVER用のシーンに遷移
         if (nowHealth < 1)
         {
             Debug.Log("GAME OVER");
